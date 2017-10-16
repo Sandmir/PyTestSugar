@@ -1,1 +1,1 @@
-# PyTestSugar
+# PyTestSugar (PyTest+Selenium+Appium+Allure)
