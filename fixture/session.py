@@ -1,5 +1,6 @@
 import time
 import allure
+from library.lib_selenium import *
 
 class SessionHelper:
     main_menu_xp = '//div[@class="mdi mdi-menu"]'
@@ -28,13 +29,12 @@ class SessionHelper:
         with allure.step('Login step'):
             driver = self.app.driver
             self.app.open_home_page()
-            driver.find_element_by_xpath(self.main_menu_xp).click()
+            wait_and_click(driver, self.main_menu_xp)
             time.sleep(2)
-            driver.find_element_by_xpath(self.main_login_button_xp).click()
-            driver.find_element_by_xpath(self.email_input_xp).send_keys(username)
-            driver.find_element_by_xpath(self.password_input_xp).send_keys(psw)
-            driver.find_element_by_xpath(self.login_button_xp).click()
-
+            wait_and_click(driver, self.main_login_button_xp)
+            wait_and_send_keys(driver, self.email_input_xp,username)
+            wait_and_send_keys(driver, self.password_input_xp, psw)
+            wait_and_click(driver, self.login_button_xp)
 
     def logout(self):
         pass
