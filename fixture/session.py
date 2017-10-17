@@ -3,6 +3,7 @@ import allure
 from library.lib_selenium import *
 
 class SessionHelper:
+
     main_menu_xp = '//div[@class="mdi mdi-menu"]'
     guest_label_xp = '//div[text()="Guest"]'
     main_login_button_xp = '//a[text()="Login"]'
@@ -10,6 +11,8 @@ class SessionHelper:
     email_input_xp = '//input[@type="text"]'
     password_input_xp = '//input[@type="password"]'
     login_button_xp = '//div[text()="Login"]'
+    logout_button_xp = '//div[text()="Logout"]'
+
     greeting_xp = '//h1[1]'
     return_button_xp = '//div[text()="Return to homepage"]'
 
@@ -37,4 +40,15 @@ class SessionHelper:
             wait_and_click(driver, self.login_button_xp)
 
     def logout(self):
-        pass
+        with allure.step('Logout step'):
+            driver = self.app.driver
+            wait_and_click(driver, self.main_menu_xp)
+            time.sleep(2)
+            wait_and_click(driver, self.logout_button_xp)
+
+    def get_new_psw(self):
+        with allure.step('Get valid password'):
+            file_psw = open('//Privite/Study/Python/PyTestSugar/Data/password.txt', 'r')
+            new_psw = file_psw.readline()
+            file_psw.close()
+            return new_psw
