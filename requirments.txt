@@ -1,0 +1,5 @@
+Appium-Python-Client
+allure-pytest
+pytest
+virtualenv
+lxml
