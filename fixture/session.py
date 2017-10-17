@@ -23,7 +23,8 @@ class SessionHelper:
     reset_psw = "//*[text()='Reset Password']"
     send_new_psw_message_xp = "//*[text()='A new password has been sent to your EMail address.']"
 
-    reset_psw_error = "//*[text()='Warning: The E-Mail Address was not found in our records, please try again!']"
+    # reset_psw_error = "//*[text()='Warning: The E-Mail Address was not found in our records, please try again!']"
+    reset_error_msg = "//div[@class='context-info']"
 
     def __init__(self,app):
         self.app = app
@@ -52,3 +53,15 @@ class SessionHelper:
             new_psw = file_psw.readline()
             file_psw.close()
             return new_psw
+
+    def forget_psw(self,username=''):
+        with allure.step('Forget PSW'):
+            driver = self.app.driver
+            self.app.open_home_page()
+            wait_and_click(driver, self.main_menu_xp)
+            time.sleep(2)
+            wait_and_click(driver, self.main_login_button_xp)
+            wait_and_click(driver, self.forgot_psw_xp)
+            wait_and_send_keys(driver, self.forgot_psw_field_xp, username)
+            wait_and_click(driver, self.reset_psw)
+            sleep(3)
