@@ -8,7 +8,7 @@ from library.lib_selenium import *
 def test_login_valid_credentials(app):
     app.session.login('testmobile.marina@gmail.com', app.session.get_new_psw())
     sleep(2)
-    with allure.step('Get welcom message'):
+    with allure.step('Get welcome message'):
         greeting = get_text(app.driver, app.session.greeting_xp)
     with allure.step('Verification - valid credentials'):
         assert greeting.split(",")[0] == "Welcome back"
@@ -36,7 +36,7 @@ def test_login_invalid_username(app):
 
 
 @pytest.allure.severity(pytest.allure.severity_level.CRITICAL)
-def test_Login_empty_login_info(app):
+def test_login_empty_info(app):
     app.session.login("", "")
     sleep(2)
     with allure.step('Get error message.'):

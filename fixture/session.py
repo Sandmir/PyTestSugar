@@ -1,9 +1,33 @@
 import time
 import allure
+
+from library.APIGmail import api_get_gmail
 from library.lib_selenium import *
 
-class SessionHelper:
 
+def receive_new_psw():
+    GMAIL = api_get_gmail()
+
+    user_id = 'me'
+    label_id_one = 'INBOX'
+    label_id_two = 'UNREAD'
+
+    unread_msgs = GMAIL.users().messages().list(userId=user_id, labelIds=[label_id_one, label_id_two]).execute()
+
+    mssg_list = unread_msgs['messages']
+    m_id = mssg_list[0]['id']
+    message = GMAIL.users().messages().get(userId=user_id, id=m_id).execute()
+
+    snippet = message['snippet']
+
+    new_psw = snippet.split("Your new password to is: ")[1]
+    # save new psw
+    file_psw = open('/Privite/Study/Python/PyTestSugar/data/password.txt', 'w')
+    file_psw.write(new_psw)
+    file_psw.close()
+
+
+class SessionHelper:
     main_menu_xp = '//div[@class="mdi mdi-menu"]'
     guest_label_xp = '//div[text()="Guest"]'
     main_login_button_xp = '//a[text()="Login"]'
@@ -23,20 +47,19 @@ class SessionHelper:
     reset_psw = "//*[text()='Reset Password']"
     send_new_psw_message_xp = "//*[text()='A new password has been sent to your EMail address.']"
 
-    # reset_psw_error = "//*[text()='Warning: The E-Mail Address was not found in our records, please try again!']"
     reset_error_msg = "//div[@class='context-info']"
 
-    def __init__(self,app):
+    def __init__(self, app):
         self.app = app
 
-    def login(self,username, psw):
+    def login(self, username, psw):
         with allure.step('Login step'):
             driver = self.app.driver
             self.app.open_home_page()
             wait_and_click(driver, self.main_menu_xp)
             time.sleep(2)
             wait_and_click(driver, self.main_login_button_xp)
-            wait_and_send_keys(driver, self.email_input_xp,username)
+            wait_and_send_keys(driver, self.email_input_xp, username)
             wait_and_send_keys(driver, self.password_input_xp, psw)
             wait_and_click(driver, self.login_button_xp)
 
@@ -54,13 +77,14 @@ class SessionHelper:
             file_psw.close()
             return new_psw
 
-    def forget_psw(self,username=''):
+    def forget_psw(self, username=''):
         with allure.step('Forget PSW'):
             driver = self.app.driver
             self.app.open_home_page()
             wait_and_click(driver, self.main_menu_xp)
-            time.sleep(2)
+            sleep(2)
             wait_and_click(driver, self.main_login_button_xp)
+            sleep(3)
             wait_and_click(driver, self.forgot_psw_xp)
             wait_and_send_keys(driver, self.forgot_psw_field_xp, username)
             wait_and_click(driver, self.reset_psw)
