@@ -52,7 +52,14 @@ class SessionHelper:
     def __init__(self, app):
         self.app = app
 
-    def login(self, username, psw):
+    def get_new_psw(self):
+        with allure.step('Get valid password'):
+            file_psw = open('//Privite/Study/Python/PyTestSugar/Data/password.txt', 'r')
+            new_psw = file_psw.readline()
+            file_psw.close()
+            return new_psw
+
+    def login(self, username = 'testmobile.marina@gmail.com',psw = ''):
         with allure.step('Login step'):
             driver = self.app.driver
             self.app.open_home_page()
@@ -70,13 +77,6 @@ class SessionHelper:
             time.sleep(2)
             wait_and_click(driver, self.logout_button_xp)
 
-    def get_new_psw(self):
-        with allure.step('Get valid password'):
-            file_psw = open('//Privite/Study/Python/PyTestSugar/Data/password.txt', 'r')
-            new_psw = file_psw.readline()
-            file_psw.close()
-            return new_psw
-
     def forget_psw(self, username=''):
         with allure.step('Forget PSW'):
             driver = self.app.driver
@@ -89,3 +89,6 @@ class SessionHelper:
             wait_and_send_keys(driver, self.forgot_psw_field_xp, username)
             wait_and_click(driver, self.reset_psw)
             sleep(3)
+
+    def return_to_home_page(self):
+        wait_and_click(self.app.driver, self.return_button_xp)

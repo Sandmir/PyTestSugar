@@ -1,7 +1,7 @@
 from appium import webdriver
 
 import pytest
-
+from fixture.shoping_cart import ShopingHelper
 from fixture.session import SessionHelper
 
 
@@ -17,6 +17,7 @@ class Application:
         self.driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', capabilities)
         self.driver.implicitly_wait(20)
         self.session = SessionHelper(self)
+        self.shopingCart = ShopingHelper(self)
 
     def open_home_page(self):
         base_url = 'http://test.sugaringfactory.com/'

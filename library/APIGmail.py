@@ -59,40 +59,6 @@ def api_get_gmail():
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('gmail', 'v1', http=http)
     return service
-    # # results = service.users().messages().get(userId='me', id='15e45ac8fff5c003').execute()
-    # # # print(results)
-    # # return results
-    #
-    # results = service.users().messages().list(userId='me').execute()
-    # print(results['messages'][0]["id"])
-    # results = service.users().labels().list(userId='me').execute()
-    # labels = results.get('labels', [])
-    #
-    # if not labels:
-    #     print('No labels found.')
-    # else:
-    #   print('Labels:')
-    #   for label in labels:
-    #     print(label['name'])
-    #
-    # user_id = 'me'
-    # label_id_one = 'INBOX'
-    # label_id_two = 'UNREAD'
-    #
-    # unread_msgs = service.users().messages().list(userId=user_id, labelIds=[label_id_one, label_id_two]).execute()
-    #
-    # mssg_list = unread_msgs['messages']
-    # m_id = mssg_list[0]['id']
-    # message = service.users().messages().get(userId=user_id, id=m_id).execute()
-    #
-    # snippet = message['snippet']
-    #
-    # new_psw = snippet.split("Your new password to is: ")[1]
-    # print('GM ', new_psw)
-    # # save new psw
-    # file_psw = open('/Privite/Study/Python/PyTestSugar/data/password.txt', 'w')
-    # file_psw.write(new_psw)
-    # file_psw.close()
 
 
 if __name__ == '__main__':
