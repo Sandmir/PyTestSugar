@@ -23,7 +23,7 @@ def test_prices_match_guest(app):
          assert original_price == cart_info, "Prices doesn't match!!"
 
 
-def test_add_firs_item_to_cart(app):
+def test_add_firs_item_to_cart_guest(app):
     quantity = 2
     app.open_home_page()
     if not app.shopingCart.cart_empty:

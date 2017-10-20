@@ -1,6 +1,6 @@
 from appium import webdriver
 
-import pytest
+from fixture.payment import PaymentHelper
 from fixture.shoping_cart import ShopingHelper
 from fixture.session import SessionHelper
 
@@ -18,6 +18,7 @@ class Application:
         self.driver.implicitly_wait(20)
         self.session = SessionHelper(self)
         self.shopingCart = ShopingHelper(self)
+        self.payment = PaymentHelper(self)
 
     def open_home_page(self):
         base_url = 'http://test.sugaringfactory.com/'
