@@ -45,3 +45,22 @@ class PaymentHelper:
             wait_and_select(driver, self.mount_select, cart.month)
             wait_and_select(driver, self.year_select, cart.year)
             wait_and_send_keys(driver, self.cvv_field, cart.cvv)
+
+    def credit_cart_valid(self, cart):
+        quantity = 2
+        self.app.session.login(psw=self.app.session.get_new_psw())
+        self.app.session.return_to_home_page()
+        if self.app.shopingCart.cart_empty:
+            self.app.shopingCart.select_first_item_to_cart()
+            sleep(2)
+            with allure.step('Add %s items to the Cart' % quantity):
+                self.app.shopingCart.add_quantity(quantity)
+        self.app.payment.start_checkout()
+        self.app.payment.submit_checkout()
+
+        self.app.payment.fill_in_payment_info(cart)
+        sleep(3)
+        wait_and_click(self.app.driver, self.app.payment.complete_order)
+        # with allure.step('Complete order: %s' % cart.type):
+        #     assert text_is_present(app.driver, app.payment.order_added), "Payment: %s - fail!! " % cart.type
+
