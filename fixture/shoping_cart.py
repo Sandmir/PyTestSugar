@@ -28,6 +28,7 @@ class ShopingHelper:
     checkout_button_xp = '//div[text()="Checkout"]'
     remove_item_button_xp = '//div[@class="mdi mdi-minus-circle"]'
     origin_price = "//div[@class='product - info__item - special'"
+    goods_free_ship_xp = "//div[div[contains(@class ,'free-shipping-marker ')]]"
 
 
 
@@ -40,10 +41,22 @@ class ShopingHelper:
 
     def add_quantity(self, q=1):
         add_button = self.app.driver.find_element_by_xpath(self.cart_button_xp)
+
         while q > 0:
             add_button.click()
+            # this is a kit
+            try:
+                # self.app.driver.find_element_by_xpath(
+                #     "//div[@class='product-options__multiselect-select']").is_displayed()
+                is_displayed(self.app.driver,"//div[@class='product-options__multiselect-select']")
+                # print(self.app.driver.find_element_by_xpath(
+                #     '//div[@class= "product-options__multiselect-error-status"]').text)
+                #
+                break
+            except:
+                pass
             q = q - 1
-            sleep(2)
+            sleep(1)
 
     def get_original_price(self):
         with allure.step('Get cart price'):
@@ -78,6 +91,11 @@ class ShopingHelper:
             self.app.session.return_to_home_page()
             print('Done!! Shopping cart is empty!!')
             print('=================================================')
+
+    def select_items_free_ship(self):
+        driver = self.app.driver
+        return driver.find_elements_by_xpath(self.goods_free_ship_xp)
+
 
 
     @property

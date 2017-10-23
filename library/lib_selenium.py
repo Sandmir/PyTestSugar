@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import Select
 
 from time import sleep
 
-wait_time = 20
+wait_time = 10
 
 
 def wait_and_click(driver, xpath, type='xpath'):

@@ -1,7 +1,7 @@
 import allure
 import pytest
 
-from library.lib_assert import Assert
+
 from library.lib_selenium import *
 
 

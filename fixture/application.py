@@ -24,6 +24,7 @@ class Application:
         base_url = 'http://test.sugaringfactory.com/'
         self.driver.get(base_url)
 
+
     def destroy(self):
         self.driver.quit()
         # pass
