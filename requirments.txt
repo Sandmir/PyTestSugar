@@ -9,5 +9,4 @@ oauth2client
 google-api-python-client
 argparse
 selenium
-lxml
 pytest-allure-adaptor
