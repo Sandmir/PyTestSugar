@@ -9,3 +9,5 @@ oauth2client
 google-api-python-client
 argparse
 selenium
+lxml 4.1.0
+pytest-allure-adaptor 1.7.9
