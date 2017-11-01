@@ -2,8 +2,7 @@ from fixture.application import Application
 import pytest
 
 
-# cope='session'
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='module')
 def appLogin(request):
     fixture = Application()
     fixture.session.login(psw=fixture.session.get_new_psw())
@@ -17,7 +16,7 @@ def appLogin(request):
     return fixture
 
 
-@pytest.fixture
+@pytest.fixture(scope='module')
 def appGuest(request):
     fixture = Application()
     request.addfinalizer(fixture.destroy)

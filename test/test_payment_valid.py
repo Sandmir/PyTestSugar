@@ -10,6 +10,7 @@ def test_visa(app):
     with allure.step('Complete order: VISA'):
         assert text_is_present(app.driver, app.payment.order_added), "Payment: VISA - fail!! "
 
+
 @pytest.allure.severity(pytest.allure.severity_level.NORMAL)
 def test_mastercard(app):
     app.payment.credit_cart_valid(Mastercard())
@@ -31,12 +32,12 @@ def test_AmericanExpress(app):
     with allure.step('Complete order: AmericanExpress'):
         assert actual_error == '(TESTMODE) The merchant does not accept this type of credit card.', 'System accepts AmExp card'
 
+
 @pytest.allure.severity(pytest.allure.severity_level.NORMAL)
 def test_Discover(app):
     app.payment.credit_cart_valid(Discover())
     with allure.step('Complete order: Discover'):
         assert text_is_present(app.driver, app.payment.order_added), "Payment: Discover - fail!! "
-
 
 
 @pytest.allure.severity(pytest.allure.severity_level.NORMAL)
@@ -53,4 +54,3 @@ def test_JCB(app):
     actual_error = get_extra_info(app.driver)
     with allure.step('Complete order: JCB'):
         assert actual_error == '(TESTMODE) The merchant does not accept this type of credit card.', 'System accepts JCB card'
-

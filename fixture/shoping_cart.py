@@ -1,8 +1,8 @@
 from library.lib_selenium import *
 import allure
 
-class ShopingHelper:
 
+class ShopingHelper:
     checkout_now_button = '//div[text()="Checkout now"]'
     checkout_button = '//div[text()="Checkout"]'
     accept_checkbox = '//input[@type="checkbox"]'
@@ -29,32 +29,41 @@ class ShopingHelper:
     remove_item_button_xp = '//div[@class="mdi mdi-minus-circle"]'
     origin_price = "//div[@class='product - info__item - special'"
     goods_free_ship_xp = "//div[div[contains(@class ,'free-shipping-marker ')]]"
+    multi_xp = "//div[text()='Please select required amount for each type by clicking the numbers below.']"
+    multi_add_item = "//select[@class='product-options__multiselect-select']"
 
+    item_by_name = "//div[@class = 'products__item-name'][text() = '%s']"
 
+    add_to_cart_button = "//*[text() = 'Add to Cart']"
 
-    def __init__(self, app, mode = 'user'):
+    def __init__(self, app, mode='user'):
         self.app = app
         self.mode = mode
 
     def select_first_item_to_cart(self):
         self.app.driver.find_element_by_class_name('products__item-name').click()
 
+    def select_item_to_cart_by_name(self, name):
+        self.app.driver.find_element_by_xpath(self.item_by_name % name).click()
+
     def add_quantity(self, q=1):
+
         add_button = self.app.driver.find_element_by_xpath(self.cart_button_xp)
 
         while q > 0:
             add_button.click()
-            # this is a kit
-            try:
-                # self.app.driver.find_element_by_xpath(
-                #     "//div[@class='product-options__multiselect-select']").is_displayed()
-                is_displayed(self.app.driver,"//div[@class='product-options__multiselect-select']")
-                # print(self.app.driver.find_element_by_xpath(
-                #     '//div[@class= "product-options__multiselect-error-status"]').text)
-                #
-                break
-            except:
-                pass
+
+            # # this is a kit
+            # try:
+            #     # self.app.driver.find_element_by_xpath(
+            #     #     "//div[@class='product-options__multiselect-select']").is_displayed()
+            #     is_displayed(self.app.driver, "//div[@class='product-options__multiselect-select']")
+            #     # print(self.app.driver.find_element_by_xpath(
+            #     #     '//div[@class= "product-options__multiselect-error-status"]').text)
+            #     #
+            #     break
+            # except:
+            #     pass
             q = q - 1
             sleep(1)
 
@@ -65,7 +74,7 @@ class ShopingHelper:
             print('origine price   = ', "$" + cart_price)
             return cart_price
 
-    def get_cart_info(self, type ='price'):
+    def get_cart_info(self, type='price'):
         with allure.step('Get info Cart info'):
             total_cart_price = get_text(self.app.driver, self.price_cart_xp)
             if type == 'price':
@@ -96,8 +105,6 @@ class ShopingHelper:
         driver = self.app.driver
         return driver.find_elements_by_xpath(self.goods_free_ship_xp)
 
-
-
     @property
     def cart_empty(self):
         try:
@@ -106,4 +113,21 @@ class ShopingHelper:
         except:
             return True
 
+    @property
+    def multiselect_kit(self):
+        try:
+            return is_displayed(self.app.driver, self.multi_xp)
+        except:
+            return False
 
+    def multi_item_add(self, count):
+        driver = self.app.driver
+        wait_and_select(driver, self.multi_add_item, count)
+        wait_and_click(driver, self.add_to_cart_button)
+
+    def get_size_of_kit(self):
+        driver = self.app.driver
+        count_str = driver.find_element_by_xpath(
+            "//div[@class='product-options__multiselect-error-status']").text
+
+        return int((count_str.split('were')[0]).split('of')[1])

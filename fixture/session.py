@@ -64,7 +64,7 @@ class SessionHelper:
             driver = self.app.driver
             self.app.open_home_page()
             wait_and_click(driver, self.main_menu_xp)
-            time.sleep(2)
+            sleep(2)
             wait_and_click(driver, self.main_login_button_xp)
             wait_and_send_keys(driver, self.email_input_xp, username)
             wait_and_send_keys(driver, self.password_input_xp, psw)
@@ -74,7 +74,7 @@ class SessionHelper:
         with allure.step('Logout step'):
             driver = self.app.driver
             wait_and_click(driver, self.main_menu_xp)
-            time.sleep(2)
+            sleep(2)
             wait_and_click(driver, self.logout_button_xp)
 
     def forget_psw(self, username=''):
