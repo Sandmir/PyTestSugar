@@ -33,7 +33,7 @@ class PaymentHelper:
             wait_and_click(self.app.driver, self.checkout_now_button)
 
     def submit_checkout(self):
-        sleep(3)
+        sleep(4)
         self.app.driver.find_element_by_xpath('//input[@type="checkbox"]').click()
         wait_and_click(self.app.driver, self.confirm_button)
 

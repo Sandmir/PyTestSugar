@@ -1,5 +1,4 @@
 from appium import webdriver
-
 from fixture.payment import PaymentHelper
 from fixture.shoping_cart import ShopingHelper
 from fixture.session import SessionHelper
@@ -27,5 +26,4 @@ class Application:
 
     def destroy(self):
         self.driver.quit()
-
-         # pass
+        # pass

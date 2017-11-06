@@ -48,6 +48,9 @@ class SessionHelper:
     send_new_psw_message_xp = "//*[text()='A new password has been sent to your EMail address.']"
 
     reset_error_msg = "//div[@class='context-info']"
+    menu_button = "//div[@class='icon-button']"
+    sugar_store_menu = "//span[text()='Sugaring Store']"
+
 
     def __init__(self, app):
         self.app = app
@@ -92,3 +95,7 @@ class SessionHelper:
 
     def return_to_home_page(self):
         wait_and_click(self.app.driver, self.return_button_xp)
+
+    def goto_main_store(self):
+        wait_and_click(self.app.driver, self.menu_button)
+        wait_and_click(self.app.driver, self.sugar_store_menu)

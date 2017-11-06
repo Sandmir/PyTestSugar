@@ -22,7 +22,7 @@ def appGuest(request):
     request.addfinalizer(fixture.destroy)
     return fixture
 
-@pytest.fixture
+@pytest.fixture(scope='function')
 def app(request):
     fixture = Application()
     request.addfinalizer(fixture.destroy)
